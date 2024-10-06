@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{% endblock %}
+{% block stylesheets %}{% endblock %}
+{% block top %}
+
+<div class="container">
+    <!-- Title -->
+    <div class="text-center">
+        <h1>Leveling</h1>
+        <p>Bienvenue Joueur</p>
+    </div>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <a class="navbar-brand" href="{{ path('accueil') }}">
+                    <img src="{{ asset('images/dblneon.jpg') }}" alt="" width="50" height="40"
+                        class="d-inline-block align-text-top">
+                    Accueil
+                </a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('quetes') }}">Quêtes</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+{% endblock %}
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
