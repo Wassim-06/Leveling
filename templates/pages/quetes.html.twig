@@ -1,4 +1,72 @@
 {% extends "basefront.html.twig" %}
 {% block body %}
-<h1>Page de quêtes</h1>
+<h1>Tableau des Quêtes</h1>
+<table class="table table-dark table-hover">
+    <thead>
+        <tr>
+            <th scope="col">
+                Quêtes
+            </th>
+            <th scope="col">Fait</th>
+            <th scope="col">
+                Xp
+                <a href="{{ path('quetes.tri', {champ:'xpValue', ordre:'ASC'}) }}" class="btn btn-info btn-sm active"
+                    role="button" aria-pressed="true">▲</a>
+                <a href="{{ path('quetes.tri', {champ:'xpValue', ordre:'DESC'}) }}" class="btn btn-info btn-sm active"
+                    role="button" aria-pressed="true">▼</a>
+            </th>
+
+            <th scope="col">
+                Rank
+                <a href="{{ path('quetes.tri', {champ:'qrank', ordre:'ASC'}) }}" class="btn btn-info btn-sm active"
+                    role="button" aria-pressed="true">▲</a>
+                <a href="{{ path('quetes.tri', {champ:'qrank', ordre:'DESC'}) }}" class="btn btn-info btn-sm active"
+                    role="button" aria-pressed="true">▼</a>
+            </th>
+            <th>
+                Category
+                <form method="POST" action="{{ path('quetes.filtre', {champ:'category'}) }}">
+                    <div class="input-group">
+                        <select class="form-control" name="recherche" style="width: 50px;">
+                            <option value="">All</option>
+                            <option value="Sport">Sport</option>
+                            <option value="Intelligence">Intelligence</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button class="btn btn-info" type="submit" tabindex="-1">Confirmer</button>
+                        </span>
+                    </div>
+                </form>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>
+                <h5>{{ task.name }}</h5>
+            </td>
+            <td>
+                {% if task.iscompleted == 1 %} Fait
+                {% elseif task.qrank == 0 %} Pas fait
+                {% endif %}
+            </td>
+            <td>
+                <strong>{{ task.xpvalue }}</strong>
+            </td>
+            <td>
+                {% if task.qrank == 7 %} SS
+                {% elseif task.qrank == 6 %} S
+                {% elseif task.qrank == 5 %} A
+                {% elseif task.qrank == 4 %} B
+                {% elseif task.qrank == 3 %} C
+                {% elseif task.qrank == 2 %} D
+                {% elseif task.qrank == 1 %} E
+                {% endif %}
+            </td>
+            <td>{{ task.category }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
