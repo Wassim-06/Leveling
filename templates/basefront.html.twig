@@ -1,7 +1,10 @@
 {% extends "base.html.twig" %}
 
 {% block title %}{% endblock %}
-{% block stylesheets %}{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+{% endblock %}
+
 {% block top %}
 
 <div class="container">
@@ -11,18 +14,21 @@
         <p>Bienvenue Joueur</p>
     </div>
     <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <a class="navbar-brand" href="{{ path('accueil') }}">
-                    <img src="{{ asset('images/dblneon.jpg') }}" alt="" width="50" height="40"
-                        class="d-inline-block align-text-top">
+                <a class="navbar-brand neonText" href="{{ path('accueil') }}">
                     Accueil
                 </a>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('quetes') }}">
-                        <h5>Quêtes</h5>
+                        <h5 class="neonText">Quêtes</h5>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('status') }}">
+                        <h5 class="neonText">Status</h5>
                     </a>
                 </li>
             </ul>
@@ -32,4 +38,6 @@
 
 {% endblock %}
 {% block body %}{% endblock %}
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

@@ -46,4 +46,16 @@ class TaskRepository extends ServiceEntityRepository
                 ->getResult();
         }
     }
+
+    public function updateTask($id, $isCompleted)
+    {
+        return $this->createQueryBuilder('t')
+            ->update()
+            ->set('t.isCompleted', ':isCompleted')
+            ->where('t.id = :id')
+            ->setParameter('isCompleted', $isCompleted)
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->execute(); // Utilise execute() pour une mise à jour
+    }
 }

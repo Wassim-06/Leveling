@@ -1,14 +1,20 @@
 {% extends "basefront.html.twig" %}
+{% block stylesheets %}
+{{ parent() }}
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}
 {% block body %}
-<h1>Tableau des Quêtes</h1>
-<table class="table table-dark table-hover">
+<h1 class="neonText">Tableau des Quêtes</h1>
+<table class="table table-hover table-borderless">
     <thead>
         <tr>
-            <th scope="col">
+            <th scope="col" class="neonText">
                 Quêtes
             </th>
-            <th scope="col">Fait</th>
-            <th scope="col">
+            <th scope="col" class="neonText">Fait</th>
+            <th scope="col" class="neonText">
                 Xp
                 <a href="{{ path('quetes.tri', {champ:'xpValue', ordre:'ASC'}) }}" class="btn btn-info btn-sm active"
                     role="button" aria-pressed="true">▲</a>
@@ -16,14 +22,14 @@
                     role="button" aria-pressed="true">▼</a>
             </th>
 
-            <th scope="col">
+            <th scope="col" class="neonText">
                 Rank
                 <a href="{{ path('quetes.tri', {champ:'qrank', ordre:'ASC'}) }}" class="btn btn-info btn-sm active"
                     role="button" aria-pressed="true">▲</a>
                 <a href="{{ path('quetes.tri', {champ:'qrank', ordre:'DESC'}) }}" class="btn btn-info btn-sm active"
                     role="button" aria-pressed="true">▼</a>
             </th>
-            <th>
+            <th class="neonText">
                 Category
                 <form method="POST" action="{{ path('quetes.filtre', {champ:'category'}) }}">
                     <div class="input-group">
@@ -44,17 +50,21 @@
         {% for task in tasks %}
         <tr>
             <td>
-                <h5>{{ task.name }}</h5>
+                <a id="taskname" href="#" class="neonText open-modal" data-task-id="{{ task.id }}"
+                    data-task-xp="{{ task.xpvalue }}" data-task-category="{{ task.category }}">
+                    <h5>{{ task.name }}</h5>
+                </a>
             </td>
             <td>
-                {% if task.iscompleted == 1 %} Fait
-                {% elseif task.qrank == 0 %} Pas fait
-                {% endif %}
+                <form method="POST" action="{{path('task.update', {id: task.id})}}">
+                    <input type="checkbox" name="isCompleted" value="1" {% if task.iscompleted %} checked {% endif %}
+                        onchange="this.form.submit()">
+                </form>
             </td>
-            <td>
+            <td class="neonText">
                 <strong>{{ task.xpvalue }}</strong>
             </td>
-            <td>
+            <td class="neonText">
                 {% if task.qrank == 7 %} SS
                 {% elseif task.qrank == 6 %} S
                 {% elseif task.qrank == 5 %} A
@@ -64,9 +74,10 @@
                 {% elseif task.qrank == 1 %} E
                 {% endif %}
             </td>
-            <td>{{ task.category }}</td>
+            <td class="neonText">{{ task.category }}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
 {% endblock %}

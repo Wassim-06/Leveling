@@ -1,0 +1,101 @@
+.neonText {
+    font-family: 'Orbitron', sans-serif;
+    /* Police plus similaire à celle de l'image */
+    color: #dbe8ec;
+    /* Couleur bleu néon */
+    font-weight: bold;
+    /* Gras pour correspondre à la typographie */
+    letter-spacing: 2px;
+    /* Espacement légèrement large */
+
+    /* Ombres lumineuses pour recréer l'effet néon de l'image */
+    text-shadow:
+        0 0 5px rgb(142, 199, 253),
+        /* Lueur principale cyan */
+        0 0 10px rgba(190, 235, 255, 0.6),
+        /* Seconde couche de lueur */
+        0 0 20px rgba(190, 235, 255, 0.5),
+        /* Lueur plus diffuse */
+        0 0 30px rgba(190, 235, 255, 0.4),
+        /* Étend encore la lueur */
+        0 0 40px rgba(190, 235, 255, 0.3);
+    /* Lueur externe légère */
+}
+
+/* Pour simuler un encadrement clair autour */
+.neonBox {
+    border: 2px solid rgba(0, 174, 255, 0.6);
+    /* Bordure lumineuse cyan */
+    padding: 20px;
+    /* Espacement autour du texte */
+    box-shadow:
+        0 0 15px rgba(0, 174, 255, 0.7),
+        /* Lueur cyan autour du cadre */
+        inset 0 0 10px rgba(0, 255, 255, 0.4);
+    /* Lueur intérieure */
+    background-color: rgba(0, 0, 0, 0);
+    /* Fond semi-transparent */
+    width: fit-content;
+    margin: auto;
+    /* Centre le bloc */
+}
+
+/* Style ^pour image arrière plan */
+body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-image: url("/leveling/public/images/Fond.jpg");
+    /* Chemin absolu */
+
+}
+
+#taskname {
+    text-decoration: none;
+}
+
+/* Style pour la fenêtre modale */
+.modal {
+    display: none;
+    /* La modale est cachée par défaut */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 0, 0);
+    /* Fond semi-transparent */
+}
+
+/* Contenu de la modale */
+.modal-content {
+    background-color: rgb(255, 0, 0);
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #ff0000;
+    width: 70%;
+    height: 700px;
+    /* Largeur maximale */
+    max-width: 600px;
+    /* Hauteur maximale */
+    max-height: 1000px;
+}
+
+/* Bouton de fermeture (le X) */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #aaa;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

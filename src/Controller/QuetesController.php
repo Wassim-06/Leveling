@@ -52,4 +52,12 @@ class QuetesController extends AbstractController
             'tasks' => $tasks
         ]);
     }
+
+    #[Route('/quetes/checked/{id}', name: 'task.update', methods: ['POST'])]
+    public function updateTask($id): Response
+    {
+        $this->repository->updateTask($id, true);
+
+        return $this->redirectToRoute('quetes');
+    }
 }
