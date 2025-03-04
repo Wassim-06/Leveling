@@ -20,6 +20,7 @@ export interface Workout {
   exercises: Exercise[];
   categories?: string[];
   difficulty?: string;
+  completedToday?: boolean;  // ✅ Ajout pour éviter l'erreur
 }
 
 export interface UserStats {

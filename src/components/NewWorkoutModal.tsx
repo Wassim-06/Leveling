@@ -118,8 +118,7 @@ const NewWorkoutModal: React.FC<NewWorkoutModalProps> = ({
                     <div className="flex justify-between">
                         {daysLabels.map((day, index) => {
                             const dayKey = daysKeys[index];
-                            const isSelected =
-                                newWorkout.schedule && newWorkout.schedule[dayKey];
+                            const isSelected = newWorkout.schedule && newWorkout.schedule[dayKey as keyof Workout["schedule"]];
                             return (
                                 <button
                                     key={index}

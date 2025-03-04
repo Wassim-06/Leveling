@@ -3,6 +3,7 @@ import { collection, doc, updateDoc, getDoc, onSnapshot, getDocs } from "firebas
 import { db } from "../firebase";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import type { Workout } from "../types/workout";
 
 const getTimeLeftUntilMidnight = () => {
     const now = new Date();
@@ -26,7 +27,7 @@ const getTodayEnglishDay = () => {
         samedi: "saturday",
         dimanche: "sunday",
     };
-    return dayMap[todayFrench] || "sunday";
+    return dayMap[todayFrench as keyof typeof dayMap] || "sunday";
 };
 
 const Home: React.FC = () => {
@@ -70,10 +71,11 @@ const Home: React.FC = () => {
             }));
 
             const today = getTodayEnglishDay();
-            const todayWorkouts = workoutsList.filter(
-                (workout) => workout.schedule?.[today] && !workout.completedToday
-            );
-
+            const todayWorkouts = workoutsList
+                .filter((workout) =>
+                    (workout as Workout).schedule?.[today as keyof Workout["schedule"]] &&
+                    !(workout as Workout).completedToday
+                );
             setDailyQuests(todayWorkouts);
         });
         return () => unsubscribe();
@@ -136,7 +138,7 @@ const Home: React.FC = () => {
             </div>
 
             {/* Liste des quêtes */}
-            <div className="flex flex-col items-center w-full max-w-[400px] p-5">
+            <div className="flex flex-col items-center w-full max-w-[400px] p-5 pb-20 overflow-y-auto">
                 {dailyQuests.length > 0 ? (
                     dailyQuests.map((quest) => (
                         <div

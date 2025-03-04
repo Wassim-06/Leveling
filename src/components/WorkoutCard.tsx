@@ -35,7 +35,7 @@ const WorkoutCard: React.FC<WorkoutCardProps> = ({ workout, onDelete, onAddDetai
                     )}
                     <p className="text-sm text-[#93c5fd] mt-1">
                         {Object.keys(workout.schedule || {})
-                            .filter((day) => workout.schedule && workout.schedule[day])
+                            .filter((day) => workout.schedule && workout.schedule[day as keyof Workout["schedule"]])
                             .join(", ") || "Aucun jour sélectionné"}
                     </p>
                 </div>
@@ -58,8 +58,8 @@ const WorkoutCard: React.FC<WorkoutCardProps> = ({ workout, onDelete, onAddDetai
             {workout.exercises && workout.exercises.length > 0 && (
                 <div className="flex flex-col space-y-1">
                     {workout.exercises.map((detail, index) => (
-                        <p key={`${detail}-${index}`} className="text-base text-white">
-                            • {detail}
+                        <p key={`${detail.id}-${index}`} className="text-base text-white">
+                            • {detail.name} ({detail.sets}x{detail.reps})
                         </p>
                     ))}
                 </div>

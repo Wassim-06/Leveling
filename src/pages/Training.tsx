@@ -4,21 +4,36 @@ import { db } from "../firebase";
 import WorkoutCard from "../components/WorkoutCard";
 import NewWorkoutModal from "../components/NewWorkoutModal";
 import NewDetailModal from "../components/NewDetailModal";
+import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 import { IoMdAddCircle } from "react-icons/io";
+import type { Workout } from "../types/workout";
 
 export default function TrainingScreen() {
-    const [workouts, setWorkouts] = useState([]);
+    const [workouts, setWorkouts] = useState<Workout[]>([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [newWorkout, setNewWorkout] = useState({
+    const [newWorkout, setNewWorkout] = useState<Workout>({
+        id: "",  // Ajoute un ID vide pour que ça corresponde au type
         title: "",
-        schedule: {},
+        schedule: {
+            monday: false,
+            tuesday: false,
+            wednesday: false,
+            thursday: false,
+            friday: false,
+            saturday: false,
+            sunday: false,
+        },
         exercises: [],
         categories: [],
-        difficulty: "",
+        difficulty: "Facile",
+        completedToday: false,
     });
     const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
-    const [selectedWorkout, setSelectedWorkout] = useState(null);
+    const [selectedWorkout, setSelectedWorkout] = useState<Workout | null>(null);
     const [newDetail, setNewDetail] = useState("");
+
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [workoutToDelete, setWorkoutToDelete] = useState<Workout | null>(null);
 
     const addWorkout = async () => {
         if (!newWorkout.title) return;
@@ -33,11 +48,21 @@ export default function TrainingScreen() {
             console.log("✅ Tâche ajoutée avec succès ! ID :", docRef.id);
             setIsModalVisible(false);
             setNewWorkout({
+                id: "",  // Ajout d'un ID vide pour respecter le type Workout
                 title: "",
-                schedule: {},
+                schedule: {
+                    monday: false,
+                    tuesday: false,
+                    wednesday: false,
+                    thursday: false,
+                    friday: false,
+                    saturday: false,
+                    sunday: false,
+                },
                 exercises: [],
                 categories: [],
-                difficulty: "",
+                difficulty: "Facile",
+                completedToday: false,
             });
             fetchWorkouts();
         } catch (error) {
@@ -81,13 +106,35 @@ export default function TrainingScreen() {
         }
     };
 
-    const deleteWorkout = async (id) => {
+    const deleteWorkout = async (id: string) => {
         try {
             await deleteDoc(doc(db, "workouts", id));
             fetchWorkouts();
         } catch (error) {
             console.error("❌ Erreur lors de la suppression de la tâche :", error);
         }
+    };
+
+    // Au lieu de supprimer directement, on affiche la modal de confirmation
+    const handleDeleteClick = (id: string) => {
+        const workout = workouts.find((w) => w.id === id);
+        if (workout) {
+            setWorkoutToDelete(workout);
+            setShowConfirmModal(true);
+        }
+    };
+
+    const confirmDelete = async () => {
+        if (workoutToDelete) {
+            await deleteWorkout(workoutToDelete.id);
+            setShowConfirmModal(false);
+            setWorkoutToDelete(null);
+        }
+    };
+
+    const cancelDelete = () => {
+        setShowConfirmModal(false);
+        setWorkoutToDelete(null);
     };
 
     return (
@@ -112,7 +159,7 @@ export default function TrainingScreen() {
                         <WorkoutCard
                             key={workout.id}
                             workout={workout}
-                            onDelete={deleteWorkout}
+                            onDelete={handleDeleteClick}
                             onAddDetail={(workout) => {
                                 setSelectedWorkout(workout);
                                 setIsDetailModalVisible(true);
@@ -138,7 +185,7 @@ export default function TrainingScreen() {
                         ...newWorkout,
                         schedule: {
                             ...newWorkout.schedule,
-                            [dayKey]: !newWorkout.schedule?.[dayKey],
+                            [dayKey as keyof Workout["schedule"]]: !newWorkout.schedule?.[dayKey as keyof Workout["schedule"]],
                         },
                     })
                 }
@@ -151,6 +198,11 @@ export default function TrainingScreen() {
                 onChangeDetail={setNewDetail}
                 onSave={addDetailToTask}
                 onCancel={() => setIsDetailModalVisible(false)}
+            />
+            <ConfirmDeleteModal
+                visible={showConfirmModal}
+                onConfirm={confirmDelete}
+                onCancel={cancelDelete}
             />
         </div>
     );
