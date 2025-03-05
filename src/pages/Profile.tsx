@@ -79,7 +79,7 @@ const Profile: React.FC = () => {
                             {skillOrder.map((stat) => (
                                 <div
                                     key={stat}
-                                    className="bg-[rgba(255,255,255,0.1)] p-[10px] rounded-[5px] w-[41%] text-center text-[16px] font-bold"
+                                    className="bg-[rgba(255,255,255,0.1)] p-[7px] rounded-[5px] w-[46%] text-center text-[16px] font-bold"
                                 >
                                     <p>
                                         {stat}: {profile.stats[stat] || 0}
