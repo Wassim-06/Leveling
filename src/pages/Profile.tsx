@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { askNotificationPermission, sendNotification } from '../utils/notification'; // N'oublie pas ça en haut si c'est pas importé déjà
 
 const Profile: React.FC = () => {
     const [profile, setProfile] = useState<any>(null);
@@ -58,41 +57,10 @@ const Profile: React.FC = () => {
         "Foi",
         "Agilité",
         "Endurance",
-        "Explosivité",
+        "Food",
         "Force",
         "Intelligence",
     ];
-
-    useEffect(() => {
-        let intervalId: number;
-      
-        const startNotifications = async () => {
-          const permissionGranted = await askNotificationPermission();
-          if (permissionGranted) {
-            // Envoie tout de suite une notif
-            sendNotification('Le système n\'attend pas, Level UP !', {
-              body: 'Continue de progresser !',
-            });
-      
-            // Puis envoie une notif toutes les heures (3600s = 1h)
-            intervalId = window.setInterval(() => {
-              sendNotification('Le système n\'attend pas, Level UP !', {
-                body: 'Continue de progresser !',
-              });
-            }, 10 * 60 * 1000); // 10 minutes = 600 secondes
-          }
-        };
-      
-        startNotifications();
-      
-        return () => {
-          // Nettoyer l'interval si l'utilisateur quitte la page
-          if (intervalId) {
-            clearInterval(intervalId);
-          }
-        };
-      }, []);
-      
 
     if (!profile) {
         return (

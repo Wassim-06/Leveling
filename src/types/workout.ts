@@ -31,7 +31,7 @@ export interface UserStats {
   stats: {
     force: number;
     endurance: number;
-    explosivite: number;
+    food: number;
     agilite: number;
   };
 }

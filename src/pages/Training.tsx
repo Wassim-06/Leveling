@@ -7,8 +7,10 @@ import NewDetailModal from "../components/NewDetailModal";
 import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 import { IoMdAddCircle } from "react-icons/io";
 import type { Workout } from "../types/workout";
+import WorkoutFilter from "../components/WorkoutFilter";
 
 export default function TrainingScreen() {
+    const [selectedCategory, setSelectedCategory] = useState<string>("");
     const [workouts, setWorkouts] = useState<Workout[]>([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [newWorkout, setNewWorkout] = useState<Workout>({
@@ -140,6 +142,10 @@ export default function TrainingScreen() {
     return (
         <div className="bg-gradient-to-b from-[#0f172a] to-[#1e3a8a] pt-[60px] flex flex-col min-h-screen">
             {/* Header */}
+            <WorkoutFilter
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+            />
             <div className="flex justify-between items-center p-[30px]">
                 <h1
                     className="text-[28px] font-bold text-white"
@@ -154,19 +160,25 @@ export default function TrainingScreen() {
 
             {/* Liste des workouts */}
             <div className="px-5 pb-20 overflow-auto">
-                {workouts.length > 0 ? (
-                    workouts.map((workout) => (
+            {workouts.length > 0 ? (
+                    workouts
+                        .filter((workout) =>
+                        selectedCategory
+                            ? workout.categories?.includes(selectedCategory)
+                            : true
+                        )
+                        .map((workout) => (
                         <WorkoutCard
                             key={workout.id}
                             workout={workout}
                             onDelete={handleDeleteClick}
                             onAddDetail={(workout) => {
-                                setSelectedWorkout(workout);
-                                setIsDetailModalVisible(true);
+                            setSelectedWorkout(workout);
+                            setIsDetailModalVisible(true);
                             }}
                         />
-                    ))
-                ) : (
+                        ))
+                    ) : (
                     <p className="text-white text-center mt-[20px]">
                         Aucune tâche disponible
                     </p>

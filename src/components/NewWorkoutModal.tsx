@@ -38,7 +38,7 @@ const NewWorkoutModal: React.FC<NewWorkoutModalProps> = ({
         "Foi",
         "Agilité",
         "Endurance",
-        "Explosivité",
+        "Food",
         "Force",
         "Intelligence",
     ];
