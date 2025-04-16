@@ -3,6 +3,7 @@ import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Training from "./pages/Training";
+import Enemies from "./pages/Enemies";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path="training" element={<Training />} />
+        <Route path="donjon" element={<Enemies />} />
         <Route path="profile" element={<Profile />} />
       </Route>
     </Routes>

@@ -60,6 +60,7 @@ const Profile: React.FC = () => {
         "Food",
         "Force",
         "Intelligence",
+        "Mental"
     ];
 
     if (!profile) {
@@ -127,6 +128,15 @@ const Profile: React.FC = () => {
                     </div>
                 )}
             </div>
+            {/* Points de pénalité */}
+            <div className="mt-4 w-full max-w-[355px] p-4 rounded-[15px] border border-[#dc2626] bg-[rgba(220,38,38,0.1)] text-center">
+                <h2 className="text-[18px] font-bold text-[#dc2626] mb-2">Points de Pénalité</h2>
+                <p className="text-white text-[16px] font-bold">
+                    {profile.penaltyPoints || 0} point(s)
+                </p>
+            </div>
+
+
         </div>
     );
 };
